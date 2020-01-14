@@ -2,23 +2,15 @@
 apiVersion: apps.openshift.io/v1
 kind: DeploymentConfig
 metadata:
-  annotations:
-    fabric8.io/git-commit: bda663aa8d0016426ff09447d074dd8ac1ab3a9a
-    fabric8.io/iconUrl: img/icons/camel.svg
-    fabric8.io/git-branch: master
-    fabric8.io/metrics-path: dashboard/file/camel-routes.json/?var-project=fuse-application&var-version=1.0-SNAPSHOT
   labels:
     app: fuse-application
-    provider: fabric8
     version: 1.0-SNAPSHOT
     group: org.hui.demo
   name: fuse-application
 spec:
   replicas: 1
-  revisionHistoryLimit: 2
   selector:
     app: fuse-application
-    provider: fabric8
     group: org.hui.demo
   strategy:
     rollingParams:
@@ -26,14 +18,8 @@ spec:
     type: Rolling
   template:
     metadata:
-      annotations:
-        fabric8.io/git-commit: bda663aa8d0016426ff09447d074dd8ac1ab3a9a
-        fabric8.io/iconUrl: img/icons/camel.svg
-        fabric8.io/git-branch: master
-        fabric8.io/metrics-path: dashboard/file/camel-routes.json/?var-project=fuse-application&var-version=1.0-SNAPSHOT
       labels:
         app: fuse-application
-        provider: fabric8
         version: 1.0-SNAPSHOT
         group: org.hui.demo
     spec:
