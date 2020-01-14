@@ -58,19 +58,6 @@
             <groupId>org.apache.camel</groupId>
             <artifactId>camel-jaxb</artifactId>
         </dependency>
-        <!--extra stuff to get it working on openshift-->
-<!--        <dependency>-->
-<!--            <groupId>org.apache.camel</groupId>-->
-<!--            <artifactId>camel-xstream</artifactId>-->
-<!--        </dependency>-->
-<!--        <dependency>-->
-<!--            <groupId>com.thoughtworks.xstream</groupId>-->
-<!--            <artifactId>xstream</artifactId>-->
-<!--        </dependency>-->
-<!--        <dependency>-->
-<!--            <groupId>org.apache.httpcomponents</groupId>-->
-<!--            <artifactId>httpclient</artifactId>-->
-<!--        </dependency>-->
     </dependencies>
     <repositories>
         <repository>
