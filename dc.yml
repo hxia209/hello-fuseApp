@@ -1,0 +1,90 @@
+---
+apiVersion: apps.openshift.io/v1
+kind: DeploymentConfig
+metadata:
+  annotations:
+    fabric8.io/git-commit: bda663aa8d0016426ff09447d074dd8ac1ab3a9a
+    fabric8.io/iconUrl: img/icons/camel.svg
+    fabric8.io/git-branch: master
+    fabric8.io/metrics-path: dashboard/file/camel-routes.json/?var-project=fuse-application&var-version=1.0-SNAPSHOT
+  labels:
+    app: fuse-application
+    provider: fabric8
+    version: 1.0-SNAPSHOT
+    group: org.hui.demo
+  name: fuse-application
+spec:
+  replicas: 1
+  revisionHistoryLimit: 2
+  selector:
+    app: fuse-application
+    provider: fabric8
+    group: org.hui.demo
+  strategy:
+    rollingParams:
+      timeoutSeconds: 3600
+    type: Rolling
+  template:
+    metadata:
+      annotations:
+        fabric8.io/git-commit: bda663aa8d0016426ff09447d074dd8ac1ab3a9a
+        fabric8.io/iconUrl: img/icons/camel.svg
+        fabric8.io/git-branch: master
+        fabric8.io/metrics-path: dashboard/file/camel-routes.json/?var-project=fuse-application&var-version=1.0-SNAPSHOT
+      labels:
+        app: fuse-application
+        provider: fabric8
+        version: 1.0-SNAPSHOT
+        group: org.hui.demo
+    spec:
+      containers:
+        - env:
+            - name: SPRING_ACTIVEMQ_BROKER_URL
+              valueFrom:
+                configMapKeyRef:
+                  name: amq-broker-config
+                  key: SPRING_ACTIVEMQ_BROKER_URL
+            - name: SPRING_ACTIVEMQ_USER
+              valueFrom:
+                configMapKeyRef:
+                  name: amq-broker-config
+                  key: SPRING_ACTIVEMQ_USER
+            - name: SPRING_ACTIVEMQ_PASSWORD
+              valueFrom:
+                configMapKeyRef:
+                  name: amq-broker-config
+                  key: SPRING_ACTIVEMQ_PASSWORD
+          image: docker-registry.default.svc:5000/mdji-monitoring-demo/fuse-application:latest
+          imagePullPolicy: IfNotPresent
+          livenessProbe:
+            httpGet:
+              path: /health
+              port: 8081
+              scheme: HTTP
+            initialDelaySeconds: 180
+          name: spring-boot
+          ports:
+            - containerPort: 8080
+              name: http
+              protocol: TCP
+            - containerPort: 9779
+              name: prometheus
+              protocol: TCP
+            - containerPort: 8778
+              name: jolokia
+              protocol: TCP
+          readinessProbe:
+            httpGet:
+              path: /health
+              port: 8081
+              scheme: HTTP
+            initialDelaySeconds: 10
+          resources:
+            limits:
+              cpu: "1.0"
+              memory: 256Mi
+            requests:
+              cpu: "0.2"
+              memory: 256Mi
+          securityContext:
+            privileged: false
