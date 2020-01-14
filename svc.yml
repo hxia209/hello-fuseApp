@@ -1,0 +1,29 @@
+apiVersion: v1
+kind: Service
+metadata:
+  annotations:
+    fabric8.io/iconUrl: img/icons/camel.svg
+    prometheus.io/port: '9779'
+    prometheus.io/scrape: 'true'
+  labels:
+    app: fuse-application
+    expose: 'true'
+    group: org.hui.demo
+  name: fuse-application
+  namespace: mdji-monitoring-demo
+spec:
+  clusterIP: 172.30.134.115
+  ports:
+    - name: http
+      port: 8080
+      protocol: TCP
+      targetPort: 8080
+    - name: metrics
+      port: 9779
+      protocol: TCP
+      targetPort: 9779
+  selector:
+    app: fuse-application
+    group: org.hui.demo
+  sessionAffinity: None
+  type: ClusterIP
