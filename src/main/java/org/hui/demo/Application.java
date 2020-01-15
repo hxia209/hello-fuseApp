@@ -49,7 +49,7 @@ public class Application extends RouteBuilder {
                 .route()
                 .log("creating new order with following parameters: ${body.requester} ${body.type} ${body.quantity}")
                 .bean(OrderImpl.class, "createOrder(${body.requester}, ${body.type}, ${body.quantity})")
-                .to("activemq:queue:out")
+                .inOnly("activemq:queue:out")
                 .endRest();
 
         from("activemq:queue:in")
