@@ -49,14 +49,14 @@ public class Application extends RouteBuilder {
                 .route()
                 .log("creating new order with following parameters: ${body.requester} ${body.type} ${body.quantity}")
                 .bean(OrderImpl.class, "createOrder(${body.requester}, ${body.type}, ${body.quantity})")
-//                .to("activemq:queue:out")
+                .to("activemq:queue:out")
                 .endRest();
 
-//        from("activemq:queue:in")
-//                .log("received message from queue:in")
-//                // the processing needs to be done, but figure out how does the data comes in
-//                // .bean(OrderImpl.class, "createOrder(${body.requester}, ${body.type}, ${body.quantity})")
-//                .log("sending it out to queue:out")
-//                .to("activemq:queue:out");
+        from("activemq:queue:in")
+                .log("received message from queue:in")
+                // the processing needs to be done, but figure out how does the data comes in
+                // .bean(OrderImpl.class, "createOrder(${body.requester}, ${body.type}, ${body.quantity})")
+                .log("sending it out to queue:out")
+                .to("activemq:queue:out");
     }
 }
